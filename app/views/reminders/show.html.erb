@@ -1,19 +1,41 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @reminder.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @reminder.description %>
-</p>
-
-<p>
-  <strong>Scheduled at:</strong>
-  <%= @reminder.scheduled_at %>
-</p>
-
-<%= link_to 'Edit', edit_reminder_path(@reminder) %> |
-<%= link_to 'Back', reminders_path %>
+<div class="card text-white bg-info">
+  <div class="card-header"><%= @reminder.title %></div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <p><%= @reminder.description %></p>
+      <footer class="blockquote-footer text-white">
+        <%= image_tag "alarm-outline.svg", size: "24" %>
+        <%= @reminder.scheduled_at %>
+      </footer>
+    </blockquote>
+  </div>
+  <div class="card-footer text-muted">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <%= link_to reminders_path, class: 'card-link' do %>
+            <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+              <%= image_tag "arrow-undo-outline.svg", size: "24" %>
+            </span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to edit_reminder_path(@reminder), class: 'card_link' do %>
+            <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+              <%= image_tag "build-outline.svg", size: "24" %>
+            </span>
+          <% end %>
+        </div>
+        <div class="col">
+          <%= link_to @reminder, method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+              <%= image_tag "trash-outline.svg", size: "24" %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+ </div>
+</div>
