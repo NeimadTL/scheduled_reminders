@@ -1,15 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ScheduledReminders</title>
+    <title>Scheduled Reminders</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="">Scheduled Reminders</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="<%= root_path %>">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to '#', class: 'nav-link' do %>
+                <span class="badge badge-warning nav-link text-dark">Hey @<%= current_user.email %></span>
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'sign out', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to 'sign in', new_user_session_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'sign up', new_user_registration_path, class: 'nav-link' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container container-fluid">
+      <!-- Content here -->
+      <% if notice.present? %>
+        <br><div class="p-3 mb-2 bg-success text-white rounded"><%= notice %></div>
+      <% end %>
+
+      <% if alert.present? %>
+        <br><div class="p-3 mb-2 bg-danger text-white rounded"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -1,10 +1,11 @@
 class RemindersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_reminder, only: [:show, :edit, :update, :destroy]
 
   # GET /reminders
   # GET /reminders.json
   def index
-    @reminders = Reminder.all
+    @reminders = Reminder.where(user_id: current_user.id).order(created_at: :desc)
   end
 
   # GET /reminders/1
@@ -24,7 +25,7 @@ class RemindersController < ApplicationController
   # POST /reminders
   # POST /reminders.json
   def create
-    @reminder = Reminder.new(reminder_params)
+    @reminder = Reminder.new(reminder_params.merge(user: current_user))
 
     respond_to do |format|
       if @reminder.save
