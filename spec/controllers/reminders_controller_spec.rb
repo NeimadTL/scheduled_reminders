@@ -92,5 +92,36 @@ RSpec.describe RemindersController, type: :controller do
     end
   end
 
+  describe "GET #show" do
+    context "when user is signed in" do
+      before { sign_in(user, nil) }
+      it "returns a success response" do
+        reminder = Reminder.create! valid_attributes
+        get :show, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to be_successful
+      end
+    end
+
+    context "when a user tries to access a reminder of another user" do
+      before { sign_in(another_user, nil) } # another user signed in
+      it "returns a redirect response" do
+        reminder = Reminder.create! valid_attributes # reminder of user
+        get :show, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to be_redirect
+        expect(response).to redirect_to(root_url)
+        expect(flash[:alert]).to match 'You are not the owner of this reminder'
+      end
+    end
+
+    context "when no user is signed in" do
+      it "returns a redirect response and redirects to sign in path" do
+        reminder = Reminder.create! valid_attributes
+        get :show, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to be_redirect
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
 
 end
