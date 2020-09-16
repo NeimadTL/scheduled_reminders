@@ -179,5 +179,42 @@ RSpec.describe RemindersController, type: :controller do
 
   end
 
+  describe "DELETE #destroy" do
+    context "when a is signed in" do
+      before { sign_in(user, nil) }
+      it "destroys the requested reminder" do
+        reminder = Reminder.create! valid_attributes
+        expect {
+          delete :destroy, params: {id: reminder.to_param}, session: valid_session
+        }.to change(Reminder, :count).by(-1)
+      end
+
+      it "redirects to the reminders list" do
+        reminder = Reminder.create! valid_attributes
+        delete :destroy, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to redirect_to(reminders_url)
+      end
+    end
+
+    context "when user tries to delete a reminder of another user" do
+      before { sign_in(another_user, nil) }
+      it "returns a redirect response" do
+        reminder = Reminder.create! valid_attributes
+        delete :destroy, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to be_redirect
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
+    context "when no user is signed in" do
+      it "returns a redirect response and redirects to sign in" do
+        reminder = Reminder.create! valid_attributes
+        delete :destroy, params: {id: reminder.to_param}, session: valid_session
+        expect(response).to be_redirect
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
 
 end
