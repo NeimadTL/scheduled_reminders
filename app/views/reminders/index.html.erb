@@ -2,47 +2,55 @@
 
 <h1>Reminders</h1>
 
-<div class="row">
-  <% @reminders.each do |reminder| %>
-    <div class="col-sm-12 col-md-9 col-lg-6 col-xl-3">
-      <div class="card mb-4 text-white bg-info">
-        <div class="card-header"><h5 class="card-title"><%= reminder.title %></h5></div>
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-nowrap">
-            <%= image_tag "alarm-outline.svg", size: "24" %><%= reminder.scheduled_at %>
-          </h6>
-          <p class="card-text"><%= reminder.description %></p>
-        </div>
-        <div class="card-footer text-muted">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <%= link_to reminder, class: 'card-link' do %>
-                  <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
-                    <%= image_tag "eye-outline.svg", size: "24" %>
-                  </span>
-                <% end %>
-              </div>
-              <div class="col">
-                <%= link_to edit_reminder_path(reminder), class: 'card_link' do %>
-                  <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
-                    <%= image_tag "build-outline.svg", size: "24" %>
-                  </span>
-                <% end %>
-              </div>
-              <div class="col">
-                <%= link_to reminder, method: :delete, data: { confirm: 'Are you sure?' } do %>
-                  <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
-                    <%= image_tag "trash-outline.svg", size: "24" %>
-                  </span>
-                <% end %>
+<% if @reminders.empty? %>
+  <div class="card mb-4 text-white bg-info">
+    <div class="card-body">
+      You have no reminders set up at the moment
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <% @reminders.each do |reminder| %>
+      <div class="col-sm-12 col-md-9 col-lg-6 col-xl-3">
+        <div class="card mb-4 text-white bg-info">
+          <div class="card-header"><h5 class="card-title"><%= reminder.title %></h5></div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-nowrap">
+              <%= image_tag "alarm-outline.svg", size: "24" %><%= reminder.scheduled_at %>
+            </h6>
+            <p class="card-text"><%= reminder.description %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <%= link_to reminder, class: 'card-link' do %>
+                    <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+                      <%= image_tag "eye-outline.svg", size: "24" %>
+                    </span>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <%= link_to edit_reminder_path(reminder), class: 'card_link' do %>
+                    <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+                      <%= image_tag "build-outline.svg", size: "24" %>
+                    </span>
+                  <% end %>
+                </div>
+                <div class="col">
+                  <%= link_to reminder, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <span class="badge badge-warning nav-link text-dark border-0" style="box-shadow: 0 0 1px 0 rgba(42, 42, 42, 0.4), 0 3px 4px 0 rgba(42, 42, 42, 0.2);">
+                      <%= image_tag "trash-outline.svg", size: "24" %>
+                    </span>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
-       </div>
+         </div>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% end %>
 
 <br>

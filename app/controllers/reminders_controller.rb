@@ -1,6 +1,8 @@
 class RemindersController < ApplicationController
+  include ReminderOwnerFilter
   before_action :authenticate_user!
   before_action :set_reminder, only: [:show, :edit, :update, :destroy]
+  before_action :require_to_be_reminder_owner, only: [:show, :edit, :update, :destroy]
 
   # GET /reminders
   # GET /reminders.json
