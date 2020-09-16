@@ -25,14 +25,14 @@ RSpec.describe RemindersController, type: :controller do
     context "when user is signed in" do
       before { sign_in(user, nil) }
       it "returns a success response" do
-        get :new, session: valid_session
+        get :new, params: {}, session: valid_session
         expect(response).to be_successful
       end
     end
 
     context "when no user is signed in" do
       it "returns a redirect response and redirects to sign in path" do
-        get :new, session: valid_session
+        get :new, params: {}, session: valid_session
         expect(response).to be_redirect
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -66,6 +66,26 @@ RSpec.describe RemindersController, type: :controller do
     context "when no user is signed in" do
       it "returns a redirect response and redirects to sign in" do
         post :create, params: { reminder: invalid_attributes }, session: valid_session
+        expect(response).to be_redirect
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe "GET #index" do
+    context "when user is signed in" do
+      before do
+        sign_in(user, nil)
+      end
+      it "returns a success response" do
+        get :index, params: {}, session: valid_session
+        expect(response).to be_successful
+      end
+    end
+
+    context "when no user is signed in" do
+      it "returns a redirect response and redirects to sign in path" do
+        get :index, params: {}, session: valid_session
         expect(response).to be_redirect
         expect(response).to redirect_to(new_user_session_path)
       end
