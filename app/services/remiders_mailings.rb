@@ -4,7 +4,7 @@ class RemindersMailings
     reminders = Reminder.of_today
     return if reminders.empty?
     reminders.each do |reminder|
-      # call ReminderMailer
+      ReminderMailer.remind_email(reminder)
     end
   end
 

@@ -1,0 +1,12 @@
+<p>Hello <%= @reminder.user.email %>,</p>
+
+<p>We just wanted to reminde you that you have something you're supposed to you.</p>
+
+<p>Here are the details:</p>
+<h4><%= @reminder.title %></h4>
+<h5><%= @reminder.description %></h5>
+<h5>scheduled at: <%= @reminder.scheduled_at %></h5>
+
+
+Best regards,<br>
+EvoPark team
