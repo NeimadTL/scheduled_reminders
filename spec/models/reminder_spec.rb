@@ -9,6 +9,7 @@ RSpec.describe Reminder, type: :model do
   end
   it { should validate_presence_of :description }
   it { should validate_presence_of :scheduled_at }
+  it { should validate_presence_of :send_email_at }
 
   it { should belong_to :user }
 
