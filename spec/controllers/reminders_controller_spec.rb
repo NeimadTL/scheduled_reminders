@@ -12,7 +12,8 @@ RSpec.describe RemindersController, type: :controller do
 
   let(:valid_attributes) {
     { title: "awesome title", description: "wonderful description",
-      scheduled_at: DateTime.new(2001,2,3,4,5,6), user_id: user.id }
+      scheduled_at: DateTime.new(2001,2,3,4,5,6), user_id: user.id,
+      send_email_at: DateTime.new(2019,2 ,3,4,5,6) }
   }
 
   let(:invalid_attributes) {
