@@ -7,6 +7,7 @@ class Reminder < ApplicationRecord
 
   belongs_to :user
 
+  # returns reminders where an reminder email should be sent the current day 
   scope :of_today, ->  {
     where("extract(year from reminders.send_email_at) = ?
           and extract(month from reminders.send_email_at) = ?
